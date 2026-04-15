@@ -1,63 +1,148 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Biblioteca — Sistema</title>
-  <link rel="stylesheet" href="./styles.css" />
+    <meta charset="UTF-8">
+    <title>CRUD Biblioteca</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        input, button { padding: 8px; margin: 5px 2px; }
+        .btn-accion { cursor: pointer; border: 1px solid #ccc; border-radius: 4px; }
+        .btn-verde { background-color: #4CAF50; color: white; border: none; }
+        .btn-azul { background-color: #2196F3; color: white; border: none; }
+    </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <div class="brand-title">Sistema de Biblioteca</div>
-      <div class="brand-subtitle">Catálogo · Préstamos · Reservas · Usuarios</div>
+
+    <div class="container">
+        <h2>Gestión de Biblioteca</h2>
+        
+        <div style="margin-bottom: 20px;">
+            <input type="hidden" id="libroId">
+            <input type="text" id="titulo" placeholder="Título del libro" required>
+            <input type="text" id="autor" placeholder="Autor" required>
+            <button class="btn-accion btn-azul" onclick="guardarLibro()">Guardar Libro</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tablaLibros">
+                </tbody>
+        </table>
     </div>
-    <nav class="top-actions">
-      <button class="chip" data-view="libros">Libros</button>
-      <button class="chip" data-view="autores">Autores</button>
-      <button class="chip" data-view="editoriales">Editoriales</button>
-      <button class="chip" data-view="ediciones">Ediciones</button>
-      <button class="chip" data-view="ejemplares">Ejemplares</button>
-      <button class="chip" data-view="usuarios">Usuarios</button>
-      <button class="chip" data-view="prestamos">Préstamos</button>
-      <button class="chip" data-view="reservas">Reservas</button>
-    </nav>
-  </header>
 
-  <main class="layout">
-    <section class="card">
-      <div class="card-head">
-        <div>
-          <h1 id="viewTitle" class="h1">Libros</h1>
-          <div id="viewHint" class="muted">Administra el catálogo y la circulación.</div>
-        </div>
-        <div class="filters">
-          <input id="search" class="input" placeholder="Buscar..." />
-          <button id="refresh" class="btn">Actualizar</button>
-          <button id="newBtn" class="btn primary">Nuevo</button>
-        </div>
-      </div>
+    <script>
+        const API_URL = 'http://localhost:3000/libros';
 
-      <div id="content" class="panel"></div>
-    </section>
-  </main>
+        // READ: Cargar libros
+        async function cargarLibros() {
+            const respuesta = await fetch(API_URL);
+            const libros = await respuesta.json();
+            const tabla = document.getElementById('tablaLibros');
+            tabla.innerHTML = '';
+            
+            libros.forEach(libro => {
+                tabla.innerHTML += `
+                    <tr>
+                        <td>${libro.id}</td>
+                        <td><strong>${libro.titulo}</strong></td>
+                        <td>${libro.autor}</td>
+                        <td>
+                            <button class="btn-accion" onclick="editarLibro(${libro.id}, '${libro.titulo}', '${libro.autor}')">✏️ Editar</button>
+                            <button class="btn-accion" onclick="eliminarLibro(${libro.id})">🗑️ Eliminar</button>
+                            <hr style="margin: 8px 0; border: 0; border-top: 1px solid #eee;">
+                            <button class="btn-accion btn-verde" onclick="agregarEjemplar(${libro.id})">+ Añadir Copia Física</button>
+                            <button class="btn-accion" onclick="verEjemplares(${libro.id}, '${libro.titulo}')">Ver Inventario</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
 
-  <div id="modal" class="modal">
-    <div class="modal-card">
-      <div class="modal-head">
-        <div>
-          <div id="modalTitle" class="h2">Modal</div>
-          <div id="modalSubtitle" class="muted">—</div>
-        </div>
-        <button id="modalClose" class="btn">Cerrar</button>
-      </div>
-      <div id="modalBody" class="modal-body"></div>
-      <div id="modalFooter" class="modal-footer"></div>
-    </div>
-  </div>
+        // CREATE & UPDATE: Guardar libro
+        async function guardarLibro() {
+            const id = document.getElementById('libroId').value;
+            const titulo = document.getElementById('titulo').value;
+            const autor = document.getElementById('autor').value;
 
-  <div id="toast" class="toast"></div>
+            if(!titulo || !autor) return alert("Por favor llena todos los campos");
 
-  <script src="./app.js"></script>
+            const metodo = id ? 'PUT' : 'POST';
+            const url = id ? `${API_URL}/${id}` : API_URL;
+
+            await fetch(url, {
+                method: metodo,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ titulo, autor })
+            });
+
+            document.getElementById('libroId').value = '';
+            document.getElementById('titulo').value = '';
+            document.getElementById('autor').value = '';
+            cargarLibros();
+        }
+
+        // Preparar formulario
+        function editarLibro(id, titulo, autor) {
+            document.getElementById('libroId').value = id;
+            document.getElementById('titulo').value = titulo;
+            document.getElementById('autor').value = autor;
+        }
+
+        // DELETE: Eliminar libro
+        async function eliminarLibro(id) {
+            if (confirm('¿Estás seguro de eliminar este libro?')) {
+                await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+                cargarLibros();
+            }
+        }
+
+        // ================= LÓGICA DE EJEMPLARES =================
+
+        // Agregar un ejemplar físico
+        async function agregarEjemplar(libroId) {
+            const estado = prompt("¿Cuál es el estado de este ejemplar? (Ej. Disponible, Dañado, En reparación)", "Disponible");
+            
+            if (estado !== null && estado.trim() !== "") {
+                await fetch('http://localhost:3000/ejemplares', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ libro_id: libroId, estado: estado })
+                });
+                alert('¡Ejemplar agregado al inventario con éxito!');
+            }
+        }
+
+        // Ver ejemplares
+        async function verEjemplares(libroId, tituloLibro) {
+            const respuesta = await fetch(`http://localhost:3000/libros/${libroId}/ejemplares`);
+            const ejemplares = await respuesta.json();
+            
+            if (ejemplares.length === 0) {
+                alert(`El libro "${tituloLibro}" aún no tiene copias físicas registradas en el sistema.`);
+                return;
+            }
+
+            let mensaje = `INVENTARIO DE: "${tituloLibro}"\nTotal de copias: ${ejemplares.length}\n\n`;
+            ejemplares.forEach(ej => {
+                mensaje += `ID Físico: #${ej.id} | Estado: ${ej.estado}\n`;
+            });
+            
+            alert(mensaje);
+        }
+
+        // Iniciar
+        cargarLibros();
+    </script>
 </body>
 </html>
