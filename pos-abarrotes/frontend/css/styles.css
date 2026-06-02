@@ -1,0 +1,9 @@
+:root { --pos-primary: #198754; --pos-bg: #f6f7fb; }
+body { background: var(--pos-bg); }
+.mobile-shell { max-width: 540px; margin: 0 auto; min-height: 100vh; }
+.card-pos { border: 0; border-radius: 1rem; box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+.btn-menu { min-height: 76px; font-size: 1.1rem; font-weight: 700; border-radius: 1rem; }
+.sticky-total { position: sticky; bottom: 0; z-index: 10; border-radius: 1rem 1rem 0 0; box-shadow: 0 -8px 24px rgba(0,0,0,.12); }
+.product-row, .cart-row { border-bottom: 1px solid #e9ecef; padding: .75rem 0; }
+.small-muted { font-size: .85rem; color: #6c757d; }
+.form-control, .form-select, .btn { border-radius: .75rem; }
