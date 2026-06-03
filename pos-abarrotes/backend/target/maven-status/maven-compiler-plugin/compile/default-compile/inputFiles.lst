@@ -1,7 +1,9 @@
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/PosApplication.java
+/home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/config/WebConfig.java
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/controller/AuthController.java
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/controller/CajaController.java
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/controller/InventarioController.java
+/home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/controller/MetodoPagoController.java
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/controller/ProductoController.java
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/controller/VentaController.java
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/exception/ApiException.java
@@ -12,6 +14,7 @@
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/model/dto/InventarioResponse.java
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/model/dto/LoginRequest.java
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/model/dto/LoginResponse.java
+/home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/model/dto/MetodoPagoResponse.java
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/model/dto/ProductoRequest.java
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/model/dto/ProductoResponse.java
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/model/dto/TurnoCajaResponse.java
@@ -52,5 +55,6 @@
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/service/AuthService.java
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/service/CajaService.java
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/service/InventarioService.java
+/home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/service/MetodoPagoService.java
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/service/ProductoService.java
 /home/benduolo253/Documentos/labSBDI/pos-abarrotes/backend/src/main/java/com/abarrotes/pos/service/VentaService.java
