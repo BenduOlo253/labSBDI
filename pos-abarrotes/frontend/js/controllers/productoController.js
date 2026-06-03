@@ -1,7 +1,9 @@
-import { requireSession } from '../services/api.js';
+import { requireSession, logout } from '../services/api.js';
 import { listarProductos, crearProducto, actualizarProducto, desactivarProducto } from '../services/productoApi.js';
 import { renderProductos, showMsg } from '../views/productoView.js';
-requireSession();
+const usuario = requireSession();
+document.getElementById('usuarioNombre').textContent = usuario?.nombre || usuario?.username || 'Usuario';
+document.getElementById('logout').onclick = logout;
 let productos = []; let editId = null;
 const list = document.getElementById('listaProductos'), form = document.getElementById('productoForm'), msg = document.getElementById('msg'), buscar = document.getElementById('buscar');
 async function cargar() { productos = await listarProductos(); pintar(); }
