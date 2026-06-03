@@ -1,7 +1,9 @@
-import { requireSession } from '../services/api.js';
+import { requireSession, logout } from '../services/api.js';
 import { listarInventario, listarBajoStock, ajustarInventario } from '../services/inventarioApi.js';
 import { renderInventario, showMsg } from '../views/inventarioView.js';
-const usuario = requireSession(); const list = document.getElementById('listaInventario'), msg = document.getElementById('msg'), form = document.getElementById('ajusteForm');
+const usuario = requireSession(); document.getElementById('usuarioNombre').textContent = usuario?.nombre || usuario?.username || 'Usuario';
+document.getElementById('logout').onclick = logout;
+ const list = document.getElementById('listaInventario'), msg = document.getElementById('msg'), form = document.getElementById('ajusteForm');
 async function cargar(bajo=false) { renderInventario(bajo ? await listarBajoStock() : await listarInventario(), list); }
 document.getElementById('btnBajoStock').onclick = () => cargar(true).catch(e => showMsg(msg,e.message,'danger'));
 document.getElementById('btnTodos').onclick = () => cargar().catch(e => showMsg(msg,e.message,'danger'));

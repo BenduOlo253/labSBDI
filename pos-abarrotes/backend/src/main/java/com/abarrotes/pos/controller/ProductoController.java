@@ -13,7 +13,8 @@ import java.util.List;
 public class ProductoController {
     private final ProductoService service;
     public ProductoController(ProductoService service) { this.service = service; }
-    @GetMapping public List<ProductoResponse> listar() { return service.listar(); }
+    @GetMapping public List<ProductoResponse> listar(@RequestParam(required = false) String buscar) { return service.listar(buscar); }
+    @GetMapping("/buscar") public List<ProductoResponse> buscar(@RequestParam String texto) { return service.buscarPorNombre(texto); }
     @GetMapping("/{id}") public ProductoResponse obtener(@PathVariable Long id) { return service.obtener(id); }
     @GetMapping("/codigo/{codigoBarras}") public ProductoResponse codigo(@PathVariable String codigoBarras) { return service.obtenerPorCodigo(codigoBarras); }
     @PostMapping @ResponseStatus(HttpStatus.CREATED) public ProductoResponse crear(@Valid @RequestBody ProductoRequest request) { return service.crear(request); }

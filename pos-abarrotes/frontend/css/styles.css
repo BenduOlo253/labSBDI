@@ -7,3 +7,33 @@ body { background: var(--pos-bg); }
 .product-row, .cart-row { border-bottom: 1px solid #e9ecef; padding: .75rem 0; }
 .small-muted { font-size: .85rem; color: #6c757d; }
 .form-control, .form-select, .btn { border-radius: .75rem; }
+
+/* Layout de escritorio para la pantalla principal del punto de venta */
+.pos-desktop { min-height: 100vh; background: linear-gradient(180deg, #f8fafc 0%, #eef3f8 100%); }
+.pos-navbar { box-shadow: 0 4px 20px rgba(15, 23, 42, .06); }
+.pos-shell { max-width: 1540px; }
+.pos-alert-area { position: sticky; top: 76px; z-index: 100; }
+.product-results { display: grid; gap: .85rem; max-height: 56vh; overflow: auto; padding-right: .25rem; }
+.product-card { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1rem; border: 1px solid #e5e7eb; border-radius: 1rem; background: #fff; transition: transform .12s ease, box-shadow .12s ease; }
+.product-card:hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(15, 23, 42, .08); }
+.cart-table { max-height: 56vh; overflow: auto; }
+.cart-qty { width: 115px; }
+.empty-state { border: 1px dashed #cbd5e1; border-radius: 1rem; padding: 2rem; color: #64748b; text-align: center; background: #f8fafc; }
+.quick-actions .btn { min-height: 68px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.sale-summary { position: sticky; bottom: 1rem; }
+.summary-line, .summary-total, .change-box { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.summary-line { padding: .45rem 0; color: #475569; border-bottom: 1px solid #e2e8f0; }
+.summary-total { margin-top: .8rem; padding: 1rem; border-radius: 1rem; background: #ecfdf5; color: #166534; }
+.summary-total strong { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1; }
+.change-box { padding: .85rem 1rem; border-radius: 1rem; background: #eff6ff; color: #1d4ed8; font-size: 1.15rem; }
+.change-box strong { font-size: 1.8rem; }
+.scanner-video { width: 100%; min-height: 320px; max-height: 68vh; object-fit: cover; border-radius: 1rem; background: #0f172a; }
+
+@media (max-width: 991.98px) {
+    .mobile-shell { max-width: 720px; }
+    .sale-summary { position: static; }
+    .product-results, .cart-table { max-height: none; }
+    .product-card { align-items: stretch; flex-direction: column; }
+    .product-card .btn { width: 100%; }
+    .pos-alert-area { top: 64px; }
+}

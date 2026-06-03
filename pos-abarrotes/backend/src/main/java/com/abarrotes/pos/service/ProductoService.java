@@ -26,6 +26,14 @@ public class ProductoService {
     }
 
     public List<ProductoResponse> listar() { return productoRepository.findByActivoTrueOrderByNombreAsc().stream().map(this::toResponse).toList(); }
+    public List<ProductoResponse> listar(String buscar) {
+        if (buscar == null || buscar.isBlank()) return listar();
+        return buscarPorNombre(buscar);
+    }
+    public List<ProductoResponse> buscarPorNombre(String texto) {
+        if (texto == null || texto.isBlank()) return listar();
+        return productoRepository.findByNombreContainingIgnoreCaseAndActivoTrue(texto.trim()).stream().map(this::toResponse).toList();
+    }
     public ProductoResponse obtener(Long id) { return toResponse(findProducto(id)); }
     public ProductoResponse obtenerPorCodigo(String codigo) { return toResponse(productoRepository.findByCodigoBarrasAndActivoTrue(codigo).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Producto no encontrado", "No existe producto con código " + codigo))); }
 
